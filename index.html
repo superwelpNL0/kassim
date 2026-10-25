@@ -98,6 +98,7 @@ h2.sec{font-size:clamp(1.7rem,5vw,2.5rem);margin:40px 0 12px;line-height:1.05}
 
 /* Homepage-achtergrond #76b5c5 (licht en donker thema) */
 :root.home,:root.home[data-theme="dark"],:root.home:not([data-theme="light"]){--bg:#76b5c5;--sf:#FFFFFF;--ink:#0A0A0A;--mu:#1E3A44;--ln:#0A0A0A;--tile:#EDEDED;color-scheme:light}
+.qb{max-width:640px}.qb textarea{font:inherit;min-height:140px;resize:vertical}.qbmsg{margin:0;min-height:1.4em;font-weight:600}
 .sitewrap{margin-top:12px}
 .sitewrap iframe{display:block;width:100%;height:calc(100vh - 150px);min-height:620px;border:2px solid var(--ink);border-radius:8px;box-shadow:5px 5px 0 var(--ink);background:#fff}
 .sitewrap a{display:inline-block;margin-top:10px;color:var(--ink)}
@@ -113,16 +114,16 @@ a.nl:hover{border-color:var(--ink)}
 <main>
 <section id="v-home" class="view">
   <h1 class="lead">Hoi, ik ben Kassim.</h1>
-  <p class="lede">Contentmaker uit Nederland, op internet bekend als KassimNL. Ik maak video’s en bouw tools die jij ook mag gebruiken.</p>
+  <p class="lede">Ik ben Kassim en ik kom uit Nederland, op internet bekend als KassimNL. Ik maak soms video’s en bouw tools die jij ook mag gebruiken.</p>
   <div class="acts" style="justify-content:flex-start"><button class="pri" data-v="countdown">Probeer de countdown</button><button data-v="games">Speel een minigame</button></div>
   <h2 class="sec">Wie ik ben</h2>
   <div class="blk">
-    <p>Ik ben Kassim, op internet KassimNL. Ik maak content voor TikTok, Twitch, YouTube en Instagram. TikTok is mijn hoofdplatform. Op Instagram laat ik mijn foto’s zien.</p>
-    <p>Ik ben een echte tech-liefhebber. Ik probeer graag nieuwe apps, websites en techniek uit en werk mijn eigen ideeën uit. Deze website is daar het resultaat van: een plek met handige functies die iedereen mag gebruiken.</p>
+    <p>Ik ben Kassim, op internet KassimNL. Ik maak content voor TikTok, Twitch, YouTube en Instagram.</p>
+    <p>Ik ben een echte tech-liefhebber. Ik probeer graag nieuwe apps, websites en techniek uit en werk mijn eigen ideeën uit. Deze website is daar het resultaat van: een plek met handige functies die iedereen mag gebruiken. Het meeste is gemaakt met AI, maar dat is juist fijn.</p>
   </div>
   <h2 class="sec">Hier vind je mij</h2>
   <div class="two">
-    <a class="pl" href="https://www.tiktok.com/@kassimnl_" target="_blank" rel="noopener"><b>TikTok</b><span>@kassimnl_</span></a>
+    <a class="pl" href="https://www.tiktok.com/@kassim.nl" target="_blank" rel="noopener"><b>TikTok</b><span>@kassim.nl</span></a>
     <a class="pl" href="https://www.twitch.tv/kassimnl" target="_blank" rel="noopener"><b>Twitch</b><span>kassimnl</span></a>
     <a class="pl" href="https://www.youtube.com/@kassimnl" target="_blank" rel="noopener"><b>YouTube</b><span>kassimnl</span></a>
     <a class="pl" href="https://www.instagram.com/capturedbykassim" target="_blank" rel="noopener"><b>Instagram</b><span>capturedbykassim</span></a>
@@ -142,7 +143,20 @@ a.nl:hover{border-color:var(--ink)}
     <button class="pl" data-v="smp"><b>KassimNL SMP</b><span>Onze Nederlandse Minecraft-server met live status.</span></button>
     <a class="pl" href="spotify-modern.html" target="_blank" rel="noopener"><b>Spotify Modern ↗</b><span>Moderne Spotify-speler met jouw account.</span></a>
   </div>
-  <p class="foot">Meer functies volgen. Heb je een idee? Stuur me een bericht via mijn socials.</p>
+  <h2 class="sec" id="vragenbox">Vragenbox</h2>
+  <p class="sub">Heb je een vraag, tip of idee voor een nieuwe functie? Stuur het hier naar me toe.</p>
+  <form id="qb" class="f qb" action="https://api.formbox.app/s/kvvj44avfm59uxy3hjxpkjni" method="POST" target="qbFrame">
+    <label>Je e-mail (optioneel, alleen als je antwoord wilt)
+      <input type="email" name="email" autocomplete="email" placeholder="naam@voorbeeld.nl">
+    </label>
+    <label>Je vraag of bericht
+      <textarea name="message" required maxlength="2000" placeholder="Typ hier je vraag…"></textarea>
+    </label>
+    <div class="acts" style="justify-content:flex-start"><button class="pri" type="submit">Versturen</button></div>
+    <p id="qbMsg" class="qbmsg" role="status" aria-live="polite"></p>
+  </form>
+  <iframe name="qbFrame" id="qbFrame" title="Formulierverwerking" hidden></iframe>
+  <p class="foot">Meer functies volgen. Heb je een idee? Gebruik de vragenbox hierboven.</p>
 </section>
 
 <section id="v-countdown" class="view" hidden>
@@ -493,6 +507,11 @@ g('gnF').onsubmit=e=>{
   else{m.textContent=(v<gnX?'Hoger':'Lager')+'. Dat was poging '+gnN+'.';g('gnI').value='';g('gnI').focus()}
 };
 })();
+
+/* Vragenbox */
+(function(){const f=document.getElementById('qb'),fr=document.getElementById('qbFrame'),m=document.getElementById('qbMsg');if(!f||!fr)return;let sent=false;
+f.addEventListener('submit',()=>{sent=true;m.textContent='Bezig met versturen…'});
+fr.addEventListener('load',()=>{if(!sent)return;sent=false;m.textContent='Bedankt! Je bericht is verstuurd.';f.reset()});})();
 </script>
 </body>
 </html>
