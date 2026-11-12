@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101018">
+<meta name="description" content="KassimNL — gaming, livestreams en video's. Bekijk de nieuwste TikTok- en YouTube-clips.">
 <title>KassimNL — Creator universe</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +23,6 @@ main{padding:46px 0 80px}.eyebrow{display:inline-flex;align-items:center;gap:9px
 .view{display:none}.view.active{display:block}.page-title{font:700 clamp(2.7rem,7vw,4.5rem)/1 "Space Grotesk";letter-spacing:-.08em;margin:10px 0 12px}.status{font-size:.9rem;color:var(--muted)}.clips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.clip{overflow:hidden;display:flex;flex-direction:column;gap:10px}.clip img,.thumb-placeholder{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px;background:var(--panel2)}.clip b{font-size:1rem;line-height:1.35}.clip small{color:var(--muted)}.clip-platform{display:flex;align-items:center;justify-content:space-between;margin:30px 0 14px}
 .count-wrap:after{content:"✦";position:absolute;right:4%;top:-45px;font-size:15rem;opacity:.09}.count-wrap h2{font:700 clamp(2rem,5vw,3.2rem) "Space Grotesk";letter-spacing:-.06em;margin:8px 0}.timebox b{font:700 clamp(2rem,6vw,3.6rem)/1 "Space Grotesk";display:block;font-variant-numeric:tabular-nums}.timebox span{font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;opacity:.85}.count-tools button{background:var(--panel);border:1px solid var(--line);padding:10px 15px;border-radius:12px;font-weight:700}.holiday small{display:block;color:var(--muted)}.holiday em{margin-left:auto;font-style:normal;font-size:.8rem;color:var(--accent);font-weight:800;white-space:nowrap}
 .live{display:none;margin:22px 0;border:1px solid #35d69a77;background:#20b98112;border-radius:20px;padding:18px}.live.show{display:block}.live strong{color:#35d69a}.live iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:14px;margin-top:12px}
-.fs-inner 
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
 @media(max-width:760px){.nav{height:68px;gap:10px}.logo{font-size:1.05rem}.navlinks{gap:0}.navlinks a{padding:8px;font-size:.82rem}.hero{grid-template-columns:1fr;padding-top:20px;gap:0}.hero-art{min-height:280px}.grid,.clips-grid{grid-template-columns:1fr 1fr}.note{align-items:flex-start;flex-direction:column}}
 @media(max-width:480px){.wrap{width:min(100% - 28px,1120px)}.navlinks a{font-size:.75rem;padding:7px}.theme{width:38px;height:38px}.grid,.clips-grid{grid-template-columns:1fr}.timebox span{font-size:.65rem}.f2{right:-1%}}
@@ -30,6 +30,39 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 .logo-mark{overflow:hidden;padding:0}
 .logo-mark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
 
+/* --- Feeds: reload, skeletons, states --- */
+.clip-platform h2{margin:0;font:700 1.5rem "Space Grotesk";letter-spacing:-.04em}
+.clip-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn.small{padding:9px 14px;font-size:.88rem;border-radius:12px}
+.btn[disabled]{opacity:.65;cursor:progress;transform:none}
+.btn .spin{display:inline-block;transition:transform .2s}
+.btn.loading .spin{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.feed-status{font-size:.85rem;color:var(--muted);margin:-4px 0 12px;min-height:1.4em}
+.feed-status.err{color:#ff8d8d}
+.clip{text-decoration:none}.clip:hover{transform:translateY(-3px)}
+.clip .meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.82rem}
+.clip b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.skeleton{pointer-events:none}
+.skeleton .thumb-placeholder,.skeleton i{background:linear-gradient(90deg,var(--panel2) 25%,color-mix(in srgb,var(--panel2) 70%,var(--ink)) 50%,var(--panel2) 75%);background-size:200% 100%;animation:shimmer 1.3s infinite}
+.skeleton i{display:block;height:14px;border-radius:7px;margin-top:6px}
+@keyframes shimmer{to{background-position:-200% 0}}
+.embed-wrap{grid-column:1/-1;overflow:hidden}
+.panel a{color:var(--accent);font-weight:700}
+.count-tools{display:flex;align-items:center;gap:14px;margin-top:34px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* --- Thumbnail-strip --- */
+.strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 16px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.strip::-webkit-scrollbar{height:8px}.strip::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.thumb-card{position:relative;flex:0 0 170px;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--panel2);border:1px solid var(--line);scroll-snap-align:start;transition:transform .2s,box-shadow .2s}
+.thumb-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.thumb-card img,.thumb-card .thumb-placeholder{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border-radius:0}
+.thumb-card .play{position:absolute;right:10px;bottom:10px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#000a;color:#fff;font-size:.8rem;backdrop-filter:blur(6px)}
+.thumb-card.skeleton .thumb-placeholder{background-size:200% 100%}
+.strip .embed-wrap{flex:1 0 100%;scroll-snap-align:none}
+.arrow-btn{padding:9px 14px;font-size:1.1rem;line-height:1}
+@media(max-width:480px){.thumb-card{flex-basis:140px}}
 </style>
 </head>
 <body>
@@ -49,7 +82,7 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 <div class="live" id="liveBox"><strong>● KassimNL is live op Twitch!</strong><iframe id="twitchFrame" title="Twitch livestream" allowfullscreen></iframe></div>
 <div class="section-head"><div><div class="eyebrow">Find me online</div><h2>Volg de avonturen</h2></div><span class="muted">Eén klik en je bent erbij ↗</span></div>
 <div class="grid">
-<a class="social" href="https://www.tiktok.com/@kassimnl_" target="_blank" rel="noopener"><span class="social-icon">♪</span><span><strong>TikTok</strong><small>@kassimnl_</small></span><span class="arrow">↗</span></a>
+<a class="social" href="https://www.tiktok.com/@kassim.nl" target="_blank" rel="noopener"><span class="social-icon">♪</span><span><strong>TikTok</strong><small>@kassim.nl</small></span><span class="arrow">↗</span></a>
 <a class="social" href="https://www.youtube.com/@kassimnl" target="_blank" rel="noopener"><span class="social-icon">▶</span><span><strong>YouTube</strong><small>KassimNL</small></span><span class="arrow">↗</span></a>
 <a class="social" href="https://www.twitch.tv/kassimnl" target="_blank" rel="noopener"><span class="social-icon">◉</span><span><strong>Twitch</strong><small>kassimnl</small></span><span class="arrow">↗</span></a>
 </div>
@@ -57,7 +90,14 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 <div class="section-head"><div><div class="eyebrow">Explore</div><h2>Duik er lekker in</h2></div></div>
 <div class="grid"><a class="tile" href="#clips"><div class="social-icon">🎞️</div><h3>De nieuwste clips</h3><p class="muted">Korte highlights en momenten die je niet wilt missen.</p></a><div class="tile"><div class="social-icon">💡</div><h3>Altijd in beweging</h3><p class="muted">Nieuwe ideeën, nieuwe video's en nieuwe avonturen.</p></div></div>
 </section>
-<section class="view" id="clips"><div class="eyebrow">Highlights & uploads</div><h1 class="page-title">De clips corner.</h1><p class="lead">De nieuwste openbare video's verschijnen hier automatisch als de feeds beschikbaar zijn.</p><div class="clip-platform"><h2>♪ TikTok</h2><a class="btn" href="https://www.tiktok.com/@kassimnl_" target="_blank" rel="noopener">Open profiel ↗</a></div><div class="clips-grid" id="tkGrid"><div class="panel muted">TikTok-clips laden…</div></div><div class="clip-platform"><h2>▶ YouTube Shorts</h2><a class="btn" href="https://www.youtube.com/@kassimnl/shorts" target="_blank" rel="noopener">Alle Shorts ↗</a></div><div class="clips-grid" id="ytGrid"><div class="panel muted">Shorts laden…</div></div><div class="count-tools"><button id="refresh">↻ Clips vernieuwen</button><span class="status" id="clipStatus" role="status">Even ophalen…</span></div></section>
+<section class="view" id="clips"><div class="eyebrow">Highlights & uploads</div><h1 class="page-title">De clips corner.</h1><p class="lead">De nieuwste openbare video's verschijnen hier automatisch. Zie je iets niet? Druk op vernieuwen.</p>
+<div class="clip-platform"><h2>♪ TikTok</h2><div class="clip-tools"><button class="btn small" id="tkRefresh" data-feed="tk" type="button"><span class="spin" aria-hidden="true">↻</span><span class="lbl">Vernieuwen</span></button><a class="btn small" href="https://www.tiktok.com/@kassim.nl" target="_blank" rel="noopener">Open profiel ↗</a><button class="btn small arrow-btn" type="button" data-scroll="tkGrid:-1" aria-label="Scroll terug">‹</button><button class="btn small arrow-btn" type="button" data-scroll="tkGrid:1" aria-label="Scroll verder">›</button></div></div>
+<div class="feed-status" id="tkStatus" role="status" aria-live="polite"></div>
+<div class="strip" id="tkGrid" aria-busy="true"></div>
+<div class="clip-platform"><h2>▶ YouTube Shorts</h2><div class="clip-tools"><button class="btn small" id="ytRefresh" data-feed="yt" type="button"><span class="spin" aria-hidden="true">↻</span><span class="lbl">Vernieuwen</span></button><a class="btn small" href="https://www.youtube.com/@kassimnl/shorts" target="_blank" rel="noopener">Alle Shorts ↗</a><button class="btn small arrow-btn" type="button" data-scroll="ytGrid:-1" aria-label="Scroll terug">‹</button><button class="btn small arrow-btn" type="button" data-scroll="ytGrid:1" aria-label="Scroll verder">›</button></div></div>
+<div class="feed-status" id="ytStatus" role="status" aria-live="polite"></div>
+<div class="strip" id="ytGrid" aria-busy="true"></div>
+<div class="count-tools"><button class="btn primary" id="refresh" type="button"><span class="spin" aria-hidden="true">↻</span><span class="lbl">Alles vernieuwen</span></button><span class="status" id="clipStatus" role="status" aria-live="polite"></span></div></section>
 
 </main>
 <footer><div class="wrap foot"><span>© <span id="year"></span> KassimNL · KassimNL</span><span>Gaming • Vlogs • Fun</span></div></footer>
@@ -65,11 +105,137 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 (()=>{const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,'0');
 const theme=localStorage.getItem('kn.theme');if(theme)document.documentElement.dataset.theme=theme;
 $('themeBtn').onclick=()=>{let next=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=next;localStorage.setItem('kn.theme',next)};
-const views=['home','clips'];function route(){let v=location.hash.slice(1);if(!views.includes(v))v='home';views.forEach(x=>$(x).classList.toggle('active',x===v));document.querySelectorAll('[data-view]').forEach(a=>a.classList.toggle('active',a.dataset.view===v));document.title='KassimNL — '+v[0].toUpperCase()+v.slice(1);if(v==='clips'&&!clipsLoaded)loadClips()}addEventListener('hashchange',route);route();$('year').textContent=new Date().getFullYear();
+const views=['home','clips'];function route(){let v=location.hash.slice(1);if(!views.includes(v))v='home';views.forEach(x=>$(x).classList.toggle('active',x===v));document.querySelectorAll('[data-view]').forEach(a=>a.classList.toggle('active',a.dataset.view===v));document.title='KassimNL — '+v[0].toUpperCase()+v.slice(1);if(v==='clips'&&!clipsLoaded)loadClips()}addEventListener('hashchange',route);$('year').textContent=new Date().getFullYear();
 async function checkLive(){try{let r=await fetch('https://decapi.me/twitch/uptime/kassimnl');let t=await r.text();if(t&&!/offline|not found/i.test(t)){ $('liveBox').classList.add('show');$('twitchFrame').src='https://player.twitch.tv/?channel=kassimnl&parent='+location.hostname+'&muted=true'}else{$('liveBox').classList.remove('show');$('twitchFrame').src=''}}catch(e){$('liveBox').classList.remove('show')}}checkLive();setInterval(checkLive,60000);
-const feeds=[{url:'https://rsshub.app/tiktok/user/@kassimnl_',id:'tkGrid',name:'TikTok',profile:'https://www.tiktok.com/@kassimnl_'},{url:'https://rsshub.app/youtube/user/@kassimnl',id:'ytGrid',name:'YouTube',profile:'https://www.youtube.com/@kassimnl/shorts'}];let clipsLoaded=false;
-async function loadClips(){clipsLoaded=true;$('clipStatus').textContent='Clips ophalen…';let ok=0;for(let f of feeds){try{let r=await fetch(f.url,{cache:'no-store'});if(!r.ok)throw 0;let xml=new DOMParser().parseFromString(await r.text(),'text/xml');if(xml.querySelector('parsererror'))throw 0;let items=[...xml.querySelectorAll('item')].slice(0,6);$(f.id).innerHTML=items.length?items.map(item=>{let title=item.querySelector('title')?.textContent||'Nieuwe clip';let link=item.querySelector('link')?.textContent||item.querySelector('guid')?.textContent||f.profile;if(!/^https:\/\/(www\.)?(tiktok\.com|youtube\.com|youtu\.be)\//i.test(link))link=f.profile;let img=item.getElementsByTagName('*');let thumb=[...img].find(x=>/thumbnail/i.test(x.localName))?.getAttribute('url')||'';return `<a class="panel clip" href="${link}" target="_blank" rel="noopener">${thumb.startsWith('https://')?`<img src="${thumb}" alt="" loading="lazy">`:'<div class="thumb-placeholder"></div>'}<b>${title.replace(/[<>&"]/g,'')}</b><small>${f.name} · Bekijk video ↗</small></a>`}).join(''):`<div class="panel muted">Nog geen clips gevonden. <a href="${f.profile}">Open profiel ↗</a></div>`;ok++}catch(e){$(f.id).innerHTML=`<div class="panel muted">De feed is tijdelijk niet bereikbaar. <a href="${f.profile}" target="_blank" rel="noopener">Bekijk ${f.name} rechtstreeks ↗</a></div>`}}$('clipStatus').textContent=ok===2?'Feeds bijgewerkt.':'Sommige feeds zijn niet bereikbaar.'}
-$('refresh').onclick=()=>{clipsLoaded=false;loadClips()};
+/* ===== Clips / feeds ===== */
+// Optioneel: vul hier je YouTube kanaal-ID in (begint met UC...) voor maximale betrouwbaarheid.
+const CONFIG={ytChannelId:'UC0f7U09e-pdd_BieALVG2LA',proxyUrl:'',feedsUrl:'feeds.json',ytApiKey:'',tiktokVideos:[]}; // feedsUrl: feeds.json uit je GitHub-repo (bijgewerkt door GitHub Actions). Staat de site niet op GitHub Pages? Gebruik 'https://raw.githubusercontent.com/GEBRUIKER/REPO/main/feeds.json'. ytApiKey: optioneel gratis YouTube Data API-sleutel (meest betrouwbaar, geen proxy nodig). tiktokVideos: lijst met TikTok-video-links als vangnet, bv. ['https://www.tiktok.com/@kassim.nl/video/123...']. proxyUrl: bv. 'https://kassim-feed.JOUW.workers.dev/' (zie worker.js)
+const PROXIES=[...(CONFIG.proxyUrl?[u=>CONFIG.proxyUrl+(CONFIG.proxyUrl.includes('?')?'&':'?')+'url='+encodeURIComponent(u)]:[]),u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),u=>'https://corsproxy.io/?'+encodeURIComponent(u),u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const okLink=u=>/^https:\/\/([\w-]+\.)?(tiktok\.com|youtube\.com|youtu\.be)\//i.test(u);
+const okImg=u=>/^https:\/\//i.test(u);
+const rtf=new Intl.RelativeTimeFormat('nl',{numeric:'auto'});
+function ago(d){if(!d||isNaN(d))return'';const s=(d-Date.now())/1000,a=Math.abs(s);for(const[u,n]of[['year',31536000],['month',2592000],['week',604800],['day',86400],['hour',3600],['minute',60]])if(a>=n)return rtf.format(Math.round(s/n),u);return'zojuist'}
+function clock(t){return new Date(t).toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})}
+
+// Haalt een URL op (direct + via proxies, tegelijk) en geeft het eerste geldige resultaat terug.
+function fetchVia(url,parse,ms=9000,feed=false){
+ return Promise.any([url,...PROXIES.map(p=>p(url)),...(feed?['https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url)]:[])].map(async v=>{
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);
+  try{const r=await fetch(v,{cache:'no-store',signal:c.signal});if(!r.ok)throw new Error('HTTP '+r.status);return parse(await r.text())}finally{clearTimeout(t)}
+ }));
+}
+function parseFeed(txt){
+ if(txt.trim()[0]==='{'){const j=JSON.parse(txt);if(j.status!=='ok'||!(j.items&&j.items.length))throw new Error('json leeg');
+  return j.items.slice(0,12).map(i=>({title:i.title||'Nieuwe clip',link:i.link||'',thumb:i.thumbnail||(i.enclosure&&i.enclosure.link)||'',date:i.pubDate?new Date(i.pubDate.replace(' ','T')+'Z'):null}))}
+ const xml=new DOMParser().parseFromString(txt,'text/xml');
+ if(xml.querySelector('parsererror'))throw new Error('geen xml');
+ const nodes=[...xml.querySelectorAll('entry, item')].slice(0,12);
+ if(!nodes.length)throw new Error('leeg');
+ return nodes.map(n=>{
+  const all=[...n.getElementsByTagName('*')],byName=re=>all.find(x=>re.test(x.localName));
+  const l=n.querySelector('link');let link=l?(l.getAttribute('href')||l.textContent):(n.querySelector('guid')?.textContent||'');
+  let thumb=byName(/^thumbnail$/i)?.getAttribute('url')||all.find(x=>x.localName==='enclosure'&&/image/.test(x.getAttribute('type')||''))?.getAttribute('url')||'';
+  const vid=byName(/^videoId$/i)?.textContent;if(!thumb&&vid)thumb='https://i.ytimg.com/vi/'+vid+'/hqdefault.jpg';
+  if(!thumb){const m=(n.querySelector('description')?.textContent||'').match(/<img[^>]+src=["']([^"']+)/i);if(m)thumb=m[1].replace(/&amp;/g,'&')}
+  const d=n.querySelector('published, pubDate, updated')?.textContent;
+  return{title:(n.querySelector('title')?.textContent||'').trim()||'Nieuwe clip',link:link.trim(),thumb,date:d?new Date(d):null};
+ });
+}
+async function loadStatic(key){
+ const base=new URL(CONFIG.feedsUrl,location.href);
+ const r=await fetch(base.href+(base.search?'&':'?')+'t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
+ const a=(await r.json())[key];if(!a||!a.length)throw new Error('leeg');
+ return a.map(i=>({title:i.title,link:i.link,thumb:i.thumb?new URL(i.thumb,base).href:'',date:i.date?new Date(i.date):null}));
+}
+async function tkThumbs(urls){
+ const res=await Promise.allSettled(urls.map(u=>fetchVia('https://www.tiktok.com/oembed?url='+encodeURIComponent(u),t=>{const j=JSON.parse(t);if(!j.thumbnail_url)throw new Error('geen thumb');return{title:j.title||'TikTok-video',link:u,thumb:j.thumbnail_url,date:null}},8000)));
+ const ok=res.filter(r=>r.status==='fulfilled').map(r=>r.value);if(!ok.length)throw new Error('geen thumbs');return ok;
+}
+async function fetchTikTok(){
+ if(CONFIG.feedsUrl){try{return await loadStatic('tiktok')}catch(e){}}
+ const route='/tiktok/user/@kassim.nl';
+ try{return await Promise.any(['https://rsshub.app','https://rsshub.rssforever.com','https://hub.slarker.me'].map(h=>fetchVia(h+route,parseFeed,9000,true)))}catch(e){}
+ try{
+  const urls=await fetchVia('https://www.tiktok.com/@kassim.nl',t=>{const ids=[...new Set([...t.matchAll(/\/video\/(\d{15,})/g)].map(m=>m[1]))].slice(0,12);if(!ids.length)throw new Error('geen video\'s');return ids.map(i=>'https://www.tiktok.com/@kassim.nl/video/'+i)},12000);
+  return await tkThumbs(urls);
+ }catch(e){}
+ if(CONFIG.tiktokVideos.length)return tkThumbs(CONFIG.tiktokVideos.slice(0,12));
+ throw new Error('tiktok niet bereikbaar');
+}
+async function getChannelId(){
+ if(CONFIG.ytChannelId)return CONFIG.ytChannelId;
+ const cached=localStorage.getItem('kn.ytid');if(cached)return cached;
+ const id=await fetchVia('https://www.youtube.com/@kassimnl',t=>{const m=t.match(/"channelId":"(UC[\w-]{22})"/)||t.match(/channel\/(UC[\w-]{22})/);if(!m)throw new Error('geen id');return m[1]},12000);
+ try{localStorage.setItem('kn.ytid',id)}catch(e){}
+ return id;
+}
+async function ytApi(id){
+ for(const pl of ['UUSH'+id.slice(2),'UU'+id.slice(2)]){
+  try{const r=await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId='+pl+'&key='+encodeURIComponent(CONFIG.ytApiKey));if(!r.ok)throw new Error(r.status);const j=await r.json();
+   const items=(j.items||[]).map(i=>{const sn=i.snippet,v=sn.resourceId&&sn.resourceId.videoId;return{title:sn.title,link:'https://www.youtube.com/'+(pl.startsWith('UUSH')?'shorts/':'watch?v=')+v,thumb:'https://i.ytimg.com/vi/'+v+'/hqdefault.jpg',date:new Date(sn.publishedAt)}}).filter(i=>!/undefined/.test(i.link));
+   if(items.length)return items}catch(e){}
+ }
+ throw new Error('api mislukt');
+}
+async function fetchYouTube(){
+ if(CONFIG.feedsUrl){try{return await loadStatic('youtube')}catch(e){}}
+ const id=await getChannelId();
+ if(CONFIG.ytApiKey){try{return await ytApi(id)}catch(e){}}
+ try{return await fetchVia('https://www.youtube.com/feeds/videos.xml?playlist_id=UUSH'+id.slice(2),parseFeed,9000,true)}
+ catch(e){return fetchVia('https://www.youtube.com/feeds/videos.xml?channel_id='+id,parseFeed,9000,true)}
+}
+function tiktokEmbed(grid){
+ grid.innerHTML='<div class="panel embed-wrap"><blockquote class="tiktok-embed" cite="https://www.tiktok.com/@kassim.nl" data-unique-id="kassim.nl" data-embed-type="creator" style="max-width:780px;min-width:288px"><section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@kassim.nl">@kassim.nl</a></section></blockquote></div>';
+ document.querySelectorAll('script[data-tt]').forEach(x=>x.remove());
+ const sc=document.createElement('script');sc.src='https://www.tiktok.com/embed.js';sc.async=true;sc.dataset.tt='1';document.body.appendChild(sc);
+}
+const FEEDS={
+ tk:{name:'TikTok',grid:'tkGrid',status:'tkStatus',btn:'tkRefresh',profile:'https://www.tiktok.com/@kassim.nl',get:fetchTikTok,embed:tiktokEmbed,busy:false},
+ yt:{name:'YouTube',grid:'ytGrid',status:'ytStatus',btn:'ytRefresh',profile:'https://www.youtube.com/@kassimnl/shorts',get:fetchYouTube,busy:false}
+};
+function skeleton(){return Array.from({length:6},()=>'<div class="thumb-card skeleton"><div class="thumb-placeholder"></div></div>').join('')}
+function render(f,items){
+ const grid=$(f.grid);
+ grid.innerHTML=items.map(i=>{
+  const link=okLink(i.link)?i.link:f.profile;
+  return `<a class="thumb-card" href="${esc(link)}" target="_blank" rel="noopener" title="${esc(i.title)}" aria-label="${esc(f.name)}: ${esc(i.title)}">${okImg(i.thumb)?`<img src="${esc(i.thumb)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:'<div class="thumb-placeholder"></div>'}<span class="play" aria-hidden="true">▶</span></a>`}).join('');
+ grid.scrollLeft=0;
+ grid.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{const d=document.createElement('div');d.className='thumb-placeholder';img.replaceWith(d)}));
+}
+function setStatus(f,msg,err){const el=$(f.status);el.textContent=msg;el.classList.toggle('err',!!err)}
+function setBusy(f,on){
+ f.busy=on;const b=$(f.btn);b.disabled=on;b.classList.toggle('loading',on);b.querySelector('.lbl').textContent=on?'Bezig…':'Vernieuwen';$(f.grid).setAttribute('aria-busy',on);
+ const all=$('refresh');const any=Object.values(FEEDS).some(x=>x.busy);all.disabled=any;all.classList.toggle('loading',any);all.querySelector('.lbl').textContent=any?'Bezig…':'Alles vernieuwen';
+}
+async function loadFeed(key){
+ const f=FEEDS[key];if(f.busy)return;
+ setBusy(f,true);setStatus(f,'Clips ophalen…');
+ const grid=$(f.grid);if(!grid.querySelector('.thumb-card'))grid.innerHTML=skeleton();
+ try{
+  const items=await f.get();render(f,items);
+  try{localStorage.setItem('kn.feed.'+key,JSON.stringify({t:Date.now(),items}))}catch(e){}
+  setStatus(f,'Bijgewerkt om '+clock(Date.now()));
+ }catch(e){
+  let cached=null;try{cached=JSON.parse(localStorage.getItem('kn.feed.'+key))}catch(x){}
+  if(cached&&cached.items&&cached.items.length){render(f,cached.items);setStatus(f,'Live ophalen mislukt — opgeslagen versie van '+clock(cached.t)+'. Probeer opnieuw.',true)}
+  else if(f.embed){f.embed(grid);setStatus(f,'RSS niet bereikbaar — live widget van TikTok getoond.',true)}
+  else if(key==='yt'&&(CONFIG.ytChannelId||localStorage.getItem('kn.ytid'))){const id=CONFIG.ytChannelId||localStorage.getItem('kn.ytid');grid.innerHTML='<div class="panel embed-wrap"><iframe style="width:100%;aspect-ratio:16/9;border:0;border-radius:14px" src="https://www.youtube.com/embed/videoseries?list=UUSH'+esc(id.slice(2))+'" title="YouTube Shorts" allowfullscreen loading="lazy"></iframe></div>';setStatus(f,'Feed niet bereikbaar — YouTube-speler getoond.',true)}
+  else{grid.innerHTML=`<div class="panel muted">De feed is tijdelijk niet bereikbaar. <a href="${f.profile}" target="_blank" rel="noopener">Bekijk ${f.name} rechtstreeks ↗</a></div>`;setStatus(f,'Ophalen mislukt. Druk op vernieuwen om het opnieuw te proberen.',true)}
+ }finally{setBusy(f,false);updateGlobal()}
+}
+function updateGlobal(){
+ const st=Object.values(FEEDS).map(f=>$(f.status).classList.contains('err'));
+ $('clipStatus').textContent=Object.values(FEEDS).some(f=>f.busy)?'':(st.some(Boolean)?'Sommige feeds zijn niet (volledig) bereikbaar.':'Alle feeds bijgewerkt.');
+}
+let clipsLoaded=false;
+function loadClips(){clipsLoaded=true;return Promise.all(Object.keys(FEEDS).map(loadFeed))}
+document.querySelectorAll('[data-feed]').forEach(b=>b.addEventListener('click',()=>loadFeed(b.dataset.feed)));
+$('refresh').addEventListener('click',()=>{$('clipStatus').textContent='';loadClips()});
+// Automatisch vernieuwen: elke 10 min als je op Clips zit en de tab zichtbaar is.
+setInterval(()=>{if(location.hash==='#clips'&&!document.hidden)loadClips()},600000);
+document.querySelectorAll('[data-scroll]').forEach(b=>b.addEventListener('click',()=>{const[id,d]=b.dataset.scroll.split(':'),g=$(id);g.scrollBy({left:d*g.clientWidth*.8,behavior:'smooth'})}));
+route();
 })();
 </script>
 </body>
